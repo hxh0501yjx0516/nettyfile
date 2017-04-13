@@ -51,7 +51,7 @@ public class FileTransferClient {
 		int port = 10012;
 		try {
 			RequestFile echo = new RequestFile();
-			File file = new File("D://apache-maven-3.3.9.zip");  //  "D://files/xxoo"+args[0]+".amr"
+			File file = new File("D:\\360安全浏览器下载\\gggggggg.zip");  //  "D://files/xxoo"+args[0]+".amr"
 			String fileName = file.getName();// 文件名
 			echo.setFile(file);
 			echo.setFile_md5(MD5FileUtil.getFileMD5String(file));

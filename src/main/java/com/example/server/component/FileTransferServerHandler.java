@@ -56,8 +56,7 @@ public class FileTransferServerHandler extends ChannelHandlerAdapter {
 						ctx.close();
 						file = null ;
 						fileSize = -1;
-						randomAccessFile.close();
-						randomAccessFile = null;
+                         return;
 
 					}else {
 						start = ef.getFile_size();
