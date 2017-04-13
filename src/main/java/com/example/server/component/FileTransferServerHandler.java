@@ -52,10 +52,21 @@ public class FileTransferServerHandler extends ChannelHandlerAdapter {
 					log.info("file exists:" + ef.getFile_name()+"--" +ef.getFile_md5() +"[" + ctx.channel().remoteAddress()+"]");
 					ResponseFile responseFile = new ResponseFile(start,md5,getFilePath());
 					ctx.writeAndFlush(responseFile);
+					if(ef.getFile_size()==file.length()){
+						ctx.close();
+						file = null ;
+						fileSize = -1;
+						randomAccessFile.close();
+						randomAccessFile = null;
+
+					}else {
+						start = ef.getFile_size();
+					}
+
 
 					//TODO 这里可以做 断点续传 ，读取当前已经存在文件的总长度  和 传输过来的文件总长度对比 如果不一致，则认为本地文件没有传完毕 则续传
 					// 不过这步骤必须做好安全之后来做，否则可能会出现 文件被恶意加入内容
-					return ;
+//					return ;
 				}
 
 				randomAccessFile = new RandomAccessFile(file, "rw");
@@ -79,7 +90,7 @@ public class FileTransferServerHandler extends ChannelHandlerAdapter {
 				file = null ;
 				fileSize = -1;
 				randomAccessFile = null;
-//				ctx.close();  //这步让客户端来做
+				ctx.close();  //这步让客户端来做
 			}
 		}
 	}

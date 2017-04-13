@@ -28,9 +28,6 @@ public class FileTransferServer {
                             .channel(NioServerSocketChannel.class)
                             .option(ChannelOption.SO_BACKLOG, 1024)
                             .childHandler(new FileChannelInitializer());
-
-//            log.info("bind port:" + port);
-
                     ChannelFuture f = b.bind(10012).sync();
                     System.out.println("文件服务器启动成功！端口号：" + 10012);
                     f.channel().closeFuture().sync();
